@@ -1,0 +1,13 @@
+name: CI
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: latex-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  ci:
+    uses: edithatogo/repository-standards/.github/workflows/latex-ci.yml@f37a6c6a9764766ac25d2c65c7ec71f3a7a9fd87 # main
