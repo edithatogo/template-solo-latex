@@ -10,4 +10,35 @@ concurrency:
   cancel-in-progress: true
 jobs:
   ci:
-    uses: edithatogo/repository-standards/.github/workflows/latex-ci.yml@ad67bedaa0c4d0769bd54fd76354bac65b25b88c # main
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: xu-cheng/latex-action@6549dc21effb2730855a1281407ecfcececc6c1b # v4.1.0
+        with:
+          texlive_version: "2026"
+          os: debian
+          root_file: main.tex
+          working_directory: .
+          latexmk_use_lualatex: true
+      # latex-action writes as root inside Docker; restore readability for strict PDF validation.
+      - name: Restore generated output ownership
+        run: sudo chown -R "$(id -u):$(id -g)" build
+      - name: Validate PDF
+        env:
+          PDF_FILE: build/main.pdf
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes qpdf poppler-utils
+          test -s "$PDF_FILE"
+          qpdf --check "$PDF_FILE"
+          pdfinfo "$PDF_FILE"
+          pdftotext "$PDF_FILE" - | grep -q '[^[:space:]]'
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: latex-pdf
+          path: build/main.pdf
+          if-no-files-found: error
+          retention-days: 14
