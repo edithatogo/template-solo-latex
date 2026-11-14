@@ -10,15 +10,27 @@ This repository is designed for one maintainer. Automated checks are required;
 no second reviewer, CODEOWNERS approval, team membership, or mandatory human
 approval is introduced.
 
-## Start here
+## Usage
 
-1. Replace the title and author in `main.tex`.
-2. Run `make verify`.
-3. Review the generated PDF before creating a release tag.
+Choose **Use this template** to start a LuaLaTeX document, then follow the
+[adoption checklist](BOOTSTRAP.md). `main.tex` is the document entry point and
+`.latexmkrc` directs generated output to `build/`.
+
+1. Replace the title, author and example text in `main.tex`.
+2. Install the TeX Live 2026 and PDF-checking tools documented in
+   [CONTRIBUTING.md](CONTRIBUTING.md).
+3. Run `make verify` from the repository root.
+4. Open `build/main.pdf` and review its layout, references and text before
+   creating a release tag.
 
 ## Development
 
-CI compiles fail-closed and validates the generated PDF with qpdf, pdfinfo, and non-empty text extraction.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for setup and validation commands, and
+[BOOTSTRAP.md](BOOTSTRAP.md) for the adoption checklist.
+
+The existing CI is configured to compile fail-closed and validate the PDF with
+qpdf, pdfinfo and non-empty text extraction. Inspect the actual run and PDF;
+structural checks do not establish layout quality or institutional compliance.
 
 ## Versioning
 
@@ -30,9 +42,9 @@ Runtime logging is not applicable to a typesetting-only repository; compiler log
 
 ## Security
 
-Report vulnerabilities privately through GitHub Security Advisories. See
-[SECURITY.md](SECURITY.md); do not disclose credentials or sensitive source data
-in a public issue.
+Follow [SECURITY.md](SECURITY.md) for private reporting and the safe contact
+fallback if GitHub's **Report a vulnerability** option is unavailable. Do not
+include credentials, sensitive source data or exploit details in public issues.
 
 ## Citation
 
