@@ -8,6 +8,13 @@ declared. Include the affected commit or release in a report so the maintainer
 can confirm its status. A project generated from this template must define its
 own supported versions and maintenance policy before publishing releases.
 
+## Typesetting security
+
+Do not enable LaTeX shell escape or execute untrusted generated code. Treat
+remote fonts, packages, images, bibliography data and publication credentials
+as supply-chain inputs. Review their provenance and access before using them
+in a build or publication workflow.
+
 ## Reporting a vulnerability
 
 Report a suspected vulnerability to the **affected repository**, using its
